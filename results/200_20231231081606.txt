@@ -1,0 +1,9 @@
+http://192.168.8.1/configs
+http://192.168.8.1/configuracion
+http://192.168.8.1/config
+http://192.168.8.1/configuration
+http://192.168.8.1/configuration_management
+http://192.168.8.1/configuration_security
+http://192.168.8.1/configurator
+http://192.168.8.1/configure
+http://192.168.8.1/configuration_general

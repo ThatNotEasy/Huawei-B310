@@ -1,0 +1,4 @@
+http://192.168.8.1/apidocs
+http://192.168.8.1/api
+http://192.168.8.1/apilist
+http://192.168.8.1/apis
