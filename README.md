@@ -1,6 +1,31 @@
  # URL and Directory Scanner
 
-This Python script scans a given base URL with a list of paths to identify valid URLs and their status codes. It uses multithreading for concurrent requests and saves the successful URLs to a results folder.
+This README file offers a comprehensive explanation of two Python scripts. The first script is designed to create a tar archive of files on a remote server and subsequently transfer that archive to a local machine. The second script scans a provided base URL with a list of paths, identifying valid URLs and their corresponding status codes. The script employs multithreading to handle concurrent requests and stores successful URLs in a results folder.
+
+**Prerequisites:**
+
+- SSH access to the remote server with root privileges.
+- SCP (Secure Copy) utility installed on both the remote server and the local machine.
+
+**Step-by-Step Explanation of the Code:**
+
+**1. SSH Command:**
+
+```shellscript
+ssh -p 22 root@192.168.8.1 "cd /online/AIO_LoveTacome/GUI && tar czf archive.tar.gz *"
+```
+
+- This command establishes an SSH connection to the remote server with the IP address `192.168.8.1`. The `-p 22` option specifies the port number for the SSH connection, which is typically 22.
+- The `root` user is used to log in to the remote server.
+- The command inside the double quotes is executed on the remote server.
+- The `cd` command navigates to the directory `/online/AIO_LoveTacome/GUI` on the remote server.
+- The `tar` command is used to create a compressed tar archive named `archive.tar.gz` of all the files in the current directory (`*`). The `c` option creates a new archive, `z` indicates gzip compression, and `f` specifies the output file name.
+
+**2. SCP Command:**
+
+```shellscript
+scp -P 22 root@192.168.8.1:/online/AIO_LoveTacome/GUI/archive.tar.gz /path/to/local/directory
+```
 
 ## Prerequisites
 
@@ -75,4 +100,12 @@ def scan_links(url, html_content):
     if html_content:
         pattern = r'<a href="(.*?)"'
         links = re.findall(pattern, html_content)
-        absolute_links = [
+        absolute_links = []
+```
+
+
+
+- This command uses SCP to securely copy the `archive.tar.gz` file from the remote server to the local machine.
+- The `-P 22` option again specifies the port number for the SSH connection.
+- The source path `/online/AIO_LoveTacome/GUI/archive.tar.gz` indicates the location of the archive file on the remote server.
+- The destination path `/path/to/local/directory` specifies the
