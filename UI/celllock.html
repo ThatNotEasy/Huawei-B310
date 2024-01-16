@@ -1,0 +1,147 @@
+<DOCTYPE html>
+<html lang=en>
+<head>
+<title>AIO by LoveTacome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="sgz/bootstrap.min.css">
+<script src="sgz/jquery.min.js"></script>
+<script src="sgz/bootstrap.min.js"></script>
+<script src="sgz/cgi-bin.min.js"></script>
+<style>
+body {
+padding-top:45px;background: #121b1d url(sgz/background.png);font-size:14px;font-family:Arial;width:100%;height:100%}a{color:# e02600
+}
+</style>
+</head>
+<body>
+<!-- navbar -->
+<nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
+<a class="navbar-brand" style="text-decoration:none;color:#FFF" href="https://www.facebook.com/love.tacome.3" target="_blank"><img src="sgz/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""><b><i> AIO by LoveTacome</b></i></a>
+<button type="button" class="navbar-toggler bg-light" data-toggle="collapse" data-target="#nav">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse justify-content-between" id="nav">
+<ul class="navbar-nav">
+<li class="nav-item" >
+<a class="nav-link text-light font-weight-bold px-3" href="index.html">HOME</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-light font-weight-bold px-3" href="celllock.html">CELL LOCKING</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-light font-weight-bold px-3" href="https://www.facebook.com/love.tacome.3" target="_blank">CONTACT</a>
+</li>
+<li class="nav-item">
+<button class="btn btn" onclick="reboot()" style="color:white;font-weight:bold">REBOOT</button>
+</li>
+<li class="nav-item">
+<button class="btn btn" onclick="shutdown()" style="color:white;font-weight:bold">SHUTDOWN</button>
+</li>
+</ul>
+</div>
+</nav>
+<center>
+<br>
+<h4><a style="text-decoration:none;color:#FFF">AIO Version 3.02</a></h4>
+<h6><a href="https://www.facebook.com/love.tacome.3" target="_blank" style="text-decoration:none;color:#FFF">LoveTacome &copy<a/></h6>
+<div class="container">
+<div class="row">
+<div class="col-sm">
+<br><h3 style="text-decoration:none;color:#FFF">VPN Status and Logs</h3>
+<text id="infos">
+<span class="badge badge-secondary">Date and Time</span> <span class="badge badge-light">Identifying Current Time</span>
+<br>
+<span class="badge badge-secondary">WAN IP Address</span> <span class="badge badge-light">Identifying IPv4</span>
+<br>
+<span class="badge badge-secondary">Stunnel Status</span> <span class="badge badge-light">Getting Status</span>
+<br>
+<span class="badge badge-secondary">OpenVPN Status</span> <span class="badge badge-light">Getting Status</span>
+<br>
+<span class="badge badge-secondary">SoftEther Status</span> <span class="badge badge-light">Getting Status</span>
+<br>
+<span class="badge badge-secondary">ShadowSocksR Status</span> <span class="badge badge-light">Getting Status</span>
+<br>
+<span class="badge badge-secondary">V2ray Status</span> <span class="badge badge-light">Getting Status</span>
+<br>
+<span class="badge badge-secondary">VPN Status</span> <span class="badge badge-light">Getting Status</span>
+<br>
+<span class="badge badge-secondary">VPN IP Address</span> <span class="badge badge-light">Identifying IPv4</span>
+<br>
+<span class="badge badge-secondary">Download</span> <span class="badge badge-light">Computing...</span>
+<br>
+<span class="badge badge-secondary">Upload</span> <span class="badge badge-light">Computing...</span>
+<br>
+</text>
+<br>
+<textarea id="logs" style="width:100%;height:250pt;font-size:8pt;font-family:arial;border-color:#FFF;background-color:#000;color:#FFF;overflow:hidden;resize:none" readonly></textarea>
+<br>
+<input style="margin:5px" class="btn btn-primary" type="submit" onclick="copyLogs()" value="Copy Logs"></input>
+<button class="btn btn-danger" onclick="clearlogs()">Clear Logs</button>
+<br>
+<br>
+<a></a>
+</div>
+<div class="col-sm">
+<br>
+<br>
+<form action="/cgi-bin/celllock.cgi" method="post" onsubmit="return confirm('Continue locking Band, DLFreq, and PCI of your device?')" enctype="multipart/form-data">
+<h6><a style="text-decoration:none;color:#FFF">Band, PCI and Frequency Locking</a></h6>
+<a style="text-decoration:none;color:#FFF">LTE Band</a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="band" id="band" placeholder="1-44"></input>
+<br><a style="text-decoration:none;color:#FFF">Download Frequency</a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="dlfreq" id="dlfreq" placeholder="1-65535"></input>
+<br><a style="text-decoration:none;color:#FFF">Physical Cell ID</a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="pci" id="pci" placeholder="0-503"></input>
+<br>
+<input style="margin:5px" class="btn btn-primary" type="submit" name="submit" value="Lock"></input>
+</form>
+<div><button style="margin-bottom:5px" class="btn btn-outline-danger" onclick="cellstatus()">Status</button>
+<button style="margin-bottom:5px" class="btn btn-outline-danger" onclick="cellunlock()">Unlock</button></div>
+<br>
+<form action="/cgi-bin/iphunter.cgi" method="post" enctype="multipart/form-data">
+<h6><a style="text-decoration:none;color:#FFF">IP Address Hunter</a></h6>
+<a style="text-decoration:none;color:#FFF">IP Pattern</a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="ip" id="ip" placeholder="100.x.x.x"></input>
+<br>
+<input style="margin:5px" onclick="return confirm('Start IP Address Hunting?')" class="btn btn-primary" type="submit" name="submit" value="HUNT"></input>
+</form>
+<button class="btn btn-outline-warning" onclick="stophunt()">Stop Hunting</button>
+<br>
+</div>
+<div class="col-sm">
+<br>
+<br>
+<h6><a style="text-decoration:none;color:#FFF">Hardware Info Changer</a></h6>
+<form action="/cgi-bin/hrdwrsetinfo.cgi" method="post" onsubmit="return confirm('Change your device's MAC, IMEI, and Serial Number?')" enctype="multipart/form-data">
+<a style="text-decoration:none;color:#FFF"> MAC Address </a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="mac" id="mac" placeholder="AA:BB:CC:DD:EE:FF"></input>
+<br><a style="text-decoration:none;color:#FFF"> IMEI </a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="imei" id="imei" placeholder="112233445566778"></input>
+<br><a style="text-decoration:none;color:#FFF"> Serial Number </a>
+<br>
+<input style="text-align:center" class="btnopt" type="text" name="sn" id="sn" placeholder="ABCDWXYZ12345678"></input>
+<br>
+<br><input style="margin:5px" class="btn btn-primary" type="submit" name="submit" value="Set Info"></input>
+<button type="button" style="margin-bottom:5px" class="btn btn-outline-danger" onclick="hrdwrgetinfo(); return false;">Get Info</button>
+</form>
+<h6><a style="text-decoration:none;color:#FFF">Misc Option</a></h6>
+<div><button style="margin-bottom:5px" class="btn btn-outline-primary" onclick="changeip()">Change WAN IP</button>
+<button style="margin-bottom:5px" class="btn btn-outline-danger" onclick="speedtest()">Speedtest</button></div>
+<div><button style="margin-top:15px" class="btn btn-outline-danger" onclick="uninstall()">UNINSTALL!</button></div>
+<br>
+</div>
+</div>
+</div>
+</center>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pari Malam</title>
+  <link rel="stylesheet" href="sgz/bootstrap.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: #121b1d;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    nav {
+      background-color: #343a40;
+    }
+
+    .navbar-brand img {
+      margin-right: 5px;
+    }
+
+    .navbar-brand b {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .navbar-toggler {
+      background-color: #fff;
+    }
+
+    .navbar-nav .nav-link {
+      color: #fff !important;
+      font-weight: bold;
+      margin-right: 10px;
+      background-color: transparent;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      padding: 5px 10px;
+      transition: background-color 0.3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    main {
+      padding-top: 65px;
+      margin: 20px 0;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h3,
+    h6 {
+      color: #fff;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #fff;
+      padding-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      font-size: 12px;
+      border: 1px solid #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      resize: none;
+      margin-bottom: 20px;
+    }
+
+    .btnopt {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .btnopt button {
+      margin: 5px;
+      width: 120px;
+    }
+
+    @media (max-width: 767px) {
+      body {
+        background-attachment: scroll;
+      }
+
+      header {
+        position: relative;
+      }
+
+      nav {
+        position: static;
+      }
+
+      .navbar-toggler {
+        background-color: #343a40;
+      }
+
+      main {
+        padding-top: 20px;
+      }
+
+      .container {
+        margin-top: 20px;
+      }
+
+      textarea {
+        height: 150px;
+      }
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
+      <a class="navbar-brand" href="https://www.facebook.com/nenekkaukeling" target="_blank">
+        <img src="https://cdn.webshopapp.com/shops/27322/files/157633856/800x600x2/trollface-mask-latex-meme.jpg"
+          width="30" height="30" class="d-inline-block align-top" alt="">
+        <b>Recode By Pari Malam</b>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="index.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="celllock.html">CELL LOCKING</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="https://www.facebook.com/nenekkaukeling"
+              target="_blank">CONTACT</a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-primary" onclick="reboot()">REBOOT</button>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger" onclick="shutdown()">SHUTDOWN</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <section>
+            <h3>STATUS & LOGS</h3>
+            <text id="infos"></text>
+            <textarea id="logs" readonly></textarea>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="copyLogs()">Copy Logs</button>
+              <button class="btn btn-danger" onclick="clearlogs()">Clear Logs</button>
+            </div>
+          </section>
+        </div>
+        <div class="col-md-6">
+          <section>
+            <h6>OpenVPN Option</h6>
+            <div class="btnopt">
+              <button class="btn btn-outline-success" onclick="ovpnstart()">Connect</button>
+              <button class="btn btn-outline-warning" onclick="ovpnstop()">Disconnect</button>
+            </div>
+          </section>
+          <section>
+            <h6>VPN Configuration Selector</h6>
+            <form method="post" enctype="multipart/form-data">
+              <div class="input-group mb-4">
+                <select class="custom-select" name="openvpnconfigs">
+                  <option value="none" selected disabled hidden>Select OpenVPN</option>
+                </select>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary" type="submit"
+                    formaction="/cgi-bin/selectconfig.cgi">Select</button>
+                  <button class="btn btn-outline-danger" type="submit"
+                    formaction="/cgi-bin/removeconfig.cgi">Remove</button>
+                </div>
+              </div>
+            </form>
+          </section>
+          <section>
+            <h6>VPN Configuration Upload</h6>
+            <form action="/cgi-bin/uploadconfiguration.cgi" method="post" enctype="multipart/form-data">
+              <div class="input-group">
+                <div class="custom-file">
+                  <input accept=".ovpn,.conf,.vpn,.json" type="file" class="custom-file-input" name="configuration"
+                    id="configuration">
+                  <label class="custom-file-label" for="inputGroupFile04">Upload VPN Configuration</label>
+                </div>
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success" type="submit">Upload</button>
+                </div>
+              </div>
+            </form>
+          </section>
+          <section>
+            <h6>V2ray and OpenVPN Credentials</h6>
+            <form action="/cgi-bin/uploadpass.cgi" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="user">Username</label>
+                <input type="text" name="user" id="user" class="form-control" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <label for="uuid">UUID</label>
+                <input type="text" name="uuid" id="uuid" class="form-control" placeholder="V2RAY UUID">
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+          </section>
+          <section>
+            <h6>Misc Option</h6>
+            <div class="btnopt">
+              <button class="btn btn-outline-primary" onclick="changeip()">Change WAN IP</button>
+              <button class="btn btn-outline-danger" onclick="speedtest()">Speedtest</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="sgz/jquery.min.js"></script>
+  <script src="sgz/bootstrap.min.js"></script>
+  <script src="sgz/cgi-bin.min.js"></script>
+</body>
+
+</html>
